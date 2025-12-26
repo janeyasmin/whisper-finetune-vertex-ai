@@ -1,0 +1,37 @@
+[project]
+name = "whisper-finetune-vertex-ai"
+version = "0.1.0"
+description = "A project that fine-tunes OpenAI's Whisper model for Hindi ASR using Vertex AI Pipelines with Kubeflow Pipelines SDK."
+readme = "README.md"
+authors = [{ name = "Jane Malalane", email = "janemalalane@gmail.com" }]
+requires-python = "==3.10.*" # due to container choice: us-docker.pkg.dev/vertex-ai/training/pytorch-gpu.2-4.py310:latest
+dependencies = [
+    "torch==2.4.*",
+    "datasets[audio]",
+    "accelerate",
+    "evaluate",
+    "jiwer",
+    "soundfile",
+    "tensorboard",
+    "transformers==4.50.*", ## due to https://huggingface.co/openai/whisper-large-v3/discussions/201
+    "torchvision",
+    "librosa",
+    "torchcodec",
+    "ipykernel>=7.1.0",
+    "pip>=25.3",
+    "uvicorn>=0.40.0",
+]
+
+[project.optional-dependencies]
+gcp = [
+    "dotenv>=0.9.9",
+ "google-cloud-aiplatform>=1.132.0",
+ "kfp==2.15.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trainer"]
